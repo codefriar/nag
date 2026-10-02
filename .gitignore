@@ -2,3 +2,4 @@ Nag.xcodeproj/
 build/
 .DS_Store
 xcuserdata/
+dist/
