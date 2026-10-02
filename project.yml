@@ -24,8 +24,23 @@ targets:
         PRODUCT_NAME: Nag
         INFOPLIST_FILE: Nag/Info.plist
         GENERATE_INFOPLIST_FILE: NO
+  NagTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - NagTests
+      - path: Nag/NotificationService.swift
+      - path: Nag/ComposeViewModel.swift
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.codefriar.nag.tests
+        GENERATE_INFOPLIST_FILE: YES
 schemes:
   Nag:
     build:
       targets:
         Nag: all
+        NagTests: [test]
+    test:
+      targets:
+        - NagTests
