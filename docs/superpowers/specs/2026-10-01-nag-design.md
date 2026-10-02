@@ -18,7 +18,9 @@ notification and the app quits. That is the entire app.
 - Return sends; Esc quits without sending.
 - After a successful post the app quits. Delivered notifications remain.
 - No Dock icon, no app-switcher entry, no menu bar item.
-- Personal use only; not distributed. Ad-hoc signing.
+- Distributed publicly as a notarized DMG; see
+  `2026-10-01-nag-release-design.md`. Local development builds use ad-hoc
+  signing.
 
 ### "Persistent" and its limits
 
@@ -142,24 +144,10 @@ protocol NotificationPosting: Sendable {
 
 ## App icon
 
-The icon is the SF Symbol `checkmark.seal.text.page`, rendered to PNGs. SF
-Symbols cannot be used directly as an app icon, so a script draws it.
-
-- `scripts/make-icon.swift` is run with `swift scripts/make-icon.swift`. It
-  draws a white `checkmark.seal.text.page` (via
-  `NSImage(systemSymbolName:)` with a palette symbol configuration), centered
-  and sized to about 55% of the canvas. The background is a macOS-style
-  rounded square: an 824×824 body on a 1024×1024 canvas, corner radius ≈ 185,
-  filled with a vertical orange gradient (`#FF9F0A` → `#FF6B00`) and a subtle
-  drop shadow.
-- It writes all ten macOS sizes (16, 32, 128, 256, and 512 pt at @1x and @2x)
-  plus `Contents.json` into `Nag/Assets.xcassets/AppIcon.appiconset/`.
-- The generated PNGs are committed, so a normal build does not need the
-  script. `make icon` regenerates them.
-- `project.yml` sets `ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon`.
-- Licensing: Apple's SF Symbols license disallows using symbols in app icons.
-  This is acceptable only because Nag is for personal use and is not
-  distributed. Replace the icon before any public release.
+Superseded by `2026-10-01-nag-release-design.md`. The icon is original
+artwork, a white speech bubble with an orange "!" on the orange rounded
+square, drawn by `scripts/make-icon.swift`. The SF Symbol icon was removed
+because the SF Symbols license does not allow symbols in app icons.
 
 ## Error handling
 
