@@ -31,5 +31,10 @@ install: build
 dist:
 	scripts/release.sh
 
+release:
+	scripts/publish.sh --check
+	scripts/release.sh
+	scripts/publish.sh
+
 clean:
 	rm -rf $(BUILD_DIR) $(PROJECT)
