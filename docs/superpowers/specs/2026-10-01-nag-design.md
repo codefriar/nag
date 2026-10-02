@@ -173,8 +173,11 @@ Symbols cannot be used directly as an app icon, so a script draws it.
 
 ## Testing
 
-Swift Testing (`import Testing`) in the `NagTests` unit-test target, hosted by
-the app. `ComposeViewModel` is tested with a `FakeNotifications`
+Swift Testing (`import Testing`) in the `NagTests` unit-test target. The test
+bundle is hostless: it compiles `NotificationService.swift` and
+`ComposeViewModel.swift` directly instead of launching the app, so test runs
+never show the window or trigger the notification permission prompt.
+`ComposeViewModel` is tested with a `FakeNotifications`
 (records posts, configurable state and error) and a finish spy:
 
 - `canSend` for empty, whitespace-only, and valid titles.
