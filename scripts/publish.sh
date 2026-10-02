@@ -5,6 +5,7 @@
 #
 # Environment:
 #   CHANGELOG_FILE  changelog to read release notes from (default: CHANGELOG.md)
+#   DRY_RUN=1       run every check, then print what would be published and stop
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -43,6 +44,11 @@ if [[ "${1:-}" == "--check" ]]; then
 fi
 
 [[ -f "$DMG" && -f "$DMG.sha256" ]] || fail "$DMG not found; run 'make dist' first"
+
+if [[ "${DRY_RUN:-0}" == "1" ]]; then
+  echo "Dry run: would tag $TAG, push it, and release $DMG"
+  exit 0
+fi
 
 git tag -a "$TAG" -m "Nag $VERSION"
 git push origin "$TAG"
