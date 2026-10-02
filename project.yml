@@ -1,0 +1,31 @@
+name: Nag
+options:
+  bundleIdPrefix: com.codefriar
+  deploymentTarget:
+    macOS: "27.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MACOSX_DEPLOYMENT_TARGET: "27.0"
+    CODE_SIGN_IDENTITY: "-"
+    CODE_SIGN_STYLE: Manual
+    DEVELOPMENT_TEAM: ""
+    ENABLE_HARDENED_RUNTIME: NO
+targets:
+  Nag:
+    type: application
+    platform: macOS
+    sources:
+      - Nag
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.codefriar.nag
+        PRODUCT_NAME: Nag
+        INFOPLIST_FILE: Nag/Info.plist
+        GENERATE_INFOPLIST_FILE: NO
+schemes:
+  Nag:
+    build:
+      targets:
+        Nag: all
