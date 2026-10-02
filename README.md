@@ -35,6 +35,14 @@ Other targets: `make test`, `make build`, `make icon` (regenerate the app icon),
 Create a workflow with a keyword trigger connected to a **Launch Apps** action that targets `Nag.app`.
 You can also use a Terminal Command or Run Script action with `open -a Nag`.
 
+## Troubleshooting: grey icon on notifications
+
+Notification Center caches an app's icon the first time that bundle ID posts.
+If an icon-less build ever posts, notifications keep showing a blank grey icon.
+That cache survives rebuilds, re-signing, a new build number, restarting Notification Center, and clearing the system icon caches.
+The only fix found was changing the bundle ID (it was changed from `com.codefriar.nag` to `com.codefriar.nagapp` for this reason).
+Don't run a build without an app icon under the real bundle ID.
+
 ## Icon
 
 The icon is the SF Symbol `checkmark.seal.text.page`. Apple's SF Symbols license does not allow symbols in app icons.

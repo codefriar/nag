@@ -218,7 +218,7 @@ NagTests/
 
 - `project.yml`: targets `Nag` (application) and `NagTests`
   (bundle.unit-test). Deployment target macOS 27.0, `SWIFT_VERSION 6.0` with
-  strict concurrency, bundle ID `com.codefriar.nag`, `CODE_SIGN_IDENTITY "-"`
+  strict concurrency, bundle ID `com.codefriar.nagapp`, `CODE_SIGN_IDENTITY "-"`
   (ad-hoc), `LSUIElement YES`.
 - `Nag.xcodeproj` is gitignored, along with `build/`.
 - Makefile targets:

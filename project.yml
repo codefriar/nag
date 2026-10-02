@@ -20,7 +20,7 @@ targets:
       - Nag
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.codefriar.nag
+        PRODUCT_BUNDLE_IDENTIFIER: com.codefriar.nagapp
         PRODUCT_NAME: Nag
         INFOPLIST_FILE: Nag/Info.plist
         GENERATE_INFOPLIST_FILE: NO
@@ -34,7 +34,7 @@ targets:
       - path: Nag/ComposeViewModel.swift
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.codefriar.nag.tests
+        PRODUCT_BUNDLE_IDENTIFIER: com.codefriar.nagapp.tests
         GENERATE_INFOPLIST_FILE: YES
 schemes:
   Nag:
