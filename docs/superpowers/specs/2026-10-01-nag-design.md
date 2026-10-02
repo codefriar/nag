@@ -11,7 +11,7 @@ notification and the app quits. That is the entire app.
 
 ## Requirements
 
-- Native Swift 6 / SwiftUI app, macOS 27, built with Xcode 27.
+- Native Swift 6 / SwiftUI app, macOS 26 (Tahoe) or later, built with Xcode 27.
 - Launching the app (e.g. Alfred "Launch Apps", `open -a Nag`) shows the entry
   window in front, with the Title field focused.
 - Fields: Title (required), Subtitle (optional), Message (optional, multi-line).
@@ -205,7 +205,7 @@ NagTests/
 ```
 
 - `project.yml`: targets `Nag` (application) and `NagTests`
-  (bundle.unit-test). Deployment target macOS 27.0, `SWIFT_VERSION 6.0` with
+  (bundle.unit-test). Deployment target macOS 26.0, `SWIFT_VERSION 6.0` with
   strict concurrency, bundle ID `com.codefriar.nagapp`, `CODE_SIGN_IDENTITY "-"`
   (ad-hoc), `LSUIElement YES`.
 - `Nag.xcodeproj` is gitignored, along with `build/`.

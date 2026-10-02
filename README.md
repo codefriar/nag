@@ -10,7 +10,7 @@ Nag posts the notification and quits.
 2. Open it and drag **Nag** to **Applications**.
 
 Nag is signed and notarized by Apple, so it opens without Gatekeeper warnings.
-Requires macOS 27 or later.
+Requires macOS 26 (Tahoe) or later.
 
 ## First run
 
