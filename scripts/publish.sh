@@ -21,6 +21,7 @@ notes="$(mktemp)"
 trap 'rm -f "$notes"' EXIT
 
 [[ "${ALLOW_DIRTY:-0}" != "1" ]] || fail "refusing to publish with ALLOW_DIRTY=1"
+[[ -z "$(git status --porcelain)" ]] || fail "working tree is dirty; commit before publishing"
 
 awk -v heading="## [$VERSION]" '
   index($0, heading) == 1 { found = 1; next }
@@ -43,14 +44,21 @@ if [[ "${1:-}" == "--check" ]]; then
   exit 0
 fi
 
-[[ -f "$DMG" && -f "$DMG.sha256" ]] || fail "$DMG not found; run 'make dist' first"
+[[ -f "$DMG" && -f "$DMG.sha256" && -f "$DMG.commit" ]] || fail "$DMG not found; run 'make dist' first"
+built_from="$(tr -d '[:space:]' < "$DMG.commit")"
+head="$(git rev-parse HEAD)"
+[[ "$built_from" == "$head" ]] || fail "$DMG was built from $built_from but HEAD is $head; rebuild with 'make dist'"
+(cd dist && shasum -a 256 -c "$(basename "$DMG").sha256" >/dev/null 2>&1) \
+  || fail "checksum mismatch for $DMG; rebuild with 'make dist'"
+xcrun stapler validate "$DMG" >/dev/null 2>&1 \
+  || fail "$DMG has no valid notarization ticket; rebuild with 'make dist'"
 
 if [[ "${DRY_RUN:-0}" == "1" ]]; then
-  echo "Dry run: would tag $TAG, push it, and release $DMG"
+  echo "Dry run: would tag $built_from as $TAG, push it, and release $DMG"
   exit 0
 fi
 
-git tag -a "$TAG" -m "Nag $VERSION"
+git tag -a "$TAG" "$built_from" -m "Nag $VERSION"
 git push origin "$TAG"
 gh release create "$TAG" "$DMG" "$DMG.sha256" --title "Nag $VERSION" --notes-file "$notes"
 echo "Published $TAG"

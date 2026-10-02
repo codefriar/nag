@@ -66,7 +66,7 @@ step "Building DMG"
 # Stage only the app; the export folder also holds logs and plists.
 mkdir -p "$STAGE_DIR" dist
 ditto "$APP" "$STAGE_DIR/Nag.app"
-rm -f "$DMG"
+rm -f "$DMG" "$DMG.sha256" "$DMG.commit"
 create-dmg \
   --volname "Nag $VERSION" \
   --background scripts/dmg/background.tiff \
@@ -111,6 +111,8 @@ step "Checksum"
 dmg_name="$(basename "$DMG")"
 (cd dist && shasum -a 256 "$dmg_name" > "$dmg_name.sha256")
 sha="$(cut -d' ' -f1 < "$DMG.sha256")"
+# Lets publish.sh confirm it tags the commit this DMG was built from.
+git rev-parse HEAD > "$DMG.commit"
 
 step "Done"
 echo "DMG:     $DMG"
