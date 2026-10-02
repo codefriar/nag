@@ -1,4 +1,4 @@
-.PHONY: generate icon build test install clean
+.PHONY: generate icon dmg-background build test install dist release clean
 
 PROJECT      := Nag.xcodeproj
 BUILD_DIR    := build
@@ -12,6 +12,9 @@ generate:
 
 icon:
 	swift scripts/make-icon.swift
+
+dmg-background:
+	swift scripts/make-dmg-background.swift
 
 build: generate
 	xcodebuild build -project $(PROJECT) -scheme Nag -configuration Release \
