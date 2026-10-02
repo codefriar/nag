@@ -28,5 +28,8 @@ install: build
 	rm -rf /Applications/Nag.app
 	cp -R $(APP) /Applications/Nag.app
 
+dist:
+	scripts/release.sh
+
 clean:
 	rm -rf $(BUILD_DIR) $(PROJECT)
