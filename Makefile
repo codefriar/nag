@@ -4,7 +4,7 @@ PROJECT      := Nag.xcodeproj
 BUILD_DIR    := build
 APP          := $(BUILD_DIR)/Build/Products/Release/Nag.app
 VERSION      := $(shell tr -d '[:space:]' < VERSION)
-BUILD_NUMBER := $(shell git rev-list --count HEAD)
+BUILD_NUMBER := $(shell git rev-list --count HEAD 2>/dev/null || echo 1)
 XCB_VERSION  := MARKETING_VERSION=$(VERSION) CURRENT_PROJECT_VERSION=$(BUILD_NUMBER)
 
 generate:
