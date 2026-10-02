@@ -1,4 +1,4 @@
-.PHONY: generate build test install clean
+.PHONY: generate icon build test install clean
 
 PROJECT   := Nag.xcodeproj
 BUILD_DIR := build
@@ -6,6 +6,9 @@ APP       := $(BUILD_DIR)/Build/Products/Release/Nag.app
 
 generate:
 	xcodegen generate
+
+icon:
+	swift scripts/make-icon.swift
 
 build: generate
 	xcodebuild build -project $(PROJECT) -scheme Nag -configuration Release \
