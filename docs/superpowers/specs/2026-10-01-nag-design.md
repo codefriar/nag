@@ -140,6 +140,27 @@ protocol NotificationPosting: Sendable {
 5. Clicking a delivered notification relaunches Nag and shows a fresh entry
    window. This is acceptable default behavior; no special handling.
 
+## App icon
+
+The icon is the SF Symbol `checkmark.seal.text.page`, rendered to PNGs. SF
+Symbols cannot be used directly as an app icon, so a script draws it.
+
+- `scripts/make-icon.swift` is run with `swift scripts/make-icon.swift`. It
+  draws a white `checkmark.seal.text.page` (via
+  `NSImage(systemSymbolName:)` with a palette symbol configuration), centered
+  and sized to about 55% of the canvas. The background is a macOS-style
+  rounded square: an 824×824 body on a 1024×1024 canvas, corner radius ≈ 185,
+  filled with a vertical orange gradient (`#FF9F0A` → `#FF6B00`) and a subtle
+  drop shadow.
+- It writes all ten macOS sizes (16, 32, 128, 256, and 512 pt at @1x and @2x)
+  plus `Contents.json` into `Nag/Assets.xcassets/AppIcon.appiconset/`.
+- The generated PNGs are committed, so a normal build does not need the
+  script. `make icon` regenerates them.
+- `project.yml` sets `ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon`.
+- Licensing: Apple's SF Symbols license disallows using symbols in app icons.
+  This is acceptable only because Nag is for personal use and is not
+  distributed. Replace the icon before any public release.
+
 ## Error handling
 
 | Situation | Behavior |
@@ -184,6 +205,9 @@ Nag/
   ComposeViewModel.swift
   NotificationService.swift   # protocol, types, concrete service
   Info.plist
+  Assets.xcassets/AppIcon.appiconset/   # generated PNGs + Contents.json
+scripts/
+  make-icon.swift
 NagTests/
   ComposeViewModelTests.swift
   FakeNotifications.swift
@@ -196,6 +220,7 @@ NagTests/
 - `Nag.xcodeproj` is gitignored, along with `build/`.
 - Makefile targets:
   - `generate` — `xcodegen generate`
+  - `icon` — `swift scripts/make-icon.swift`
   - `test` — generate, then `xcodebuild test -scheme Nag -destination 'platform=macOS'`
   - `build` — generate, then a Release build into `build/`
   - `install` — build, then copy `Nag.app` to `/Applications` (replacing any
